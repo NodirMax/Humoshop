@@ -8,9 +8,7 @@ import (
 
 // получение данных от пользователья
 func GetUser(w http.ResponseWriter, r *http.Request) {
-	var User struct {
-		Login string `json:"login"`
-	}
+	var User user.UserModel
 	err := json.NewDecoder(r.Body).Decode(&User)
 	if err != nil {
 		w.WriteHeader(401)
@@ -18,7 +16,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := user.GetUserService(User.Login)
+	res, err := user.GetUserService(User)
 	if err != nil {
 		w.WriteHeader(500)
 		w.Write([]byte("Ошибка при получение данных из базы данных"))
@@ -32,13 +30,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 // Регистрация пользователья
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	var NewUser struct {
-		Name     string `json:"name"`
-		Surname  string `json:"surname"`
-		Phone    string `json:"phone"`
-		Login    string `json:"login"`
-		Password string `json:"password"`
-	}
+	var NewUser user.UserModel
 
 	err := json.NewDecoder(r.Body).Decode(&NewUser)
 	if err != nil {
@@ -61,14 +53,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 // изменение данных пользователья
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
-	var UpdateUser struct {
-		Id       int64  `json:"id"`
-		Name     string `json:"name"`
-		Surname  string `json:"surname"`
-		Phone    string `json:"phone"`
-		Login    string `json:"login"`
-		Password string `json:"password"`
-	}
+	var UpdateUser user.UserModel
 
 	err := json.NewDecoder(r.Body).Decode(&UpdateUser)
 	if err != nil {
@@ -91,9 +76,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 // удаление пользователья
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	var UserID struct {
-		Id int64 `json:"id"`
-	}
+	var UserID user.UserModel
 
 	err := json.NewDecoder(r.Body).Decode(&UserID)
 	if err != nil {

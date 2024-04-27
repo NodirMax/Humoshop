@@ -1,5 +1,5 @@
 package product
 
-func GetProductService() (err error) {
-	
-}
+// func GetProductService() (err error) {
+
+// }

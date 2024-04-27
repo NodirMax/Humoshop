@@ -6,8 +6,8 @@ import (
 )
 
 // Запрос к базе данных о продукте
-func GetProductDB(product_id GetProductStruct) (product []ProductDatabaseStruct, err error) {
-	rows, err := db.DB.Query("SELECT * FROM product WHERE product_id=$1", product_id.Id)
+func GetProductDB(product_id ProductDatabaseStruct) (product []ProductDatabaseStruct, err error) {
+	rows, err := db.DB.Query("SELECT * FROM product WHERE product_id=$1", product_id.Product_id)
 	if err != nil {
 		return
 	}
@@ -26,19 +26,19 @@ func GetProductDB(product_id GetProductStruct) (product []ProductDatabaseStruct,
 }
 
 // Добавление нового продукта В базу данных
-func CreateProductDB(user CreateProductStruct) (err error) {
+func CreateProductDB(user ProductDatabaseStruct) (err error) {
 	_, err = db.DB.Exec("INSERT INTO product(name, price, in_stock) VALUES ($1, $2, $3)", user.Name, user.Price, user.In_stock)
 	return
 }
 
 // Обновление информации о продукте
-func UpdateProductDB(p UpdateProductStruct) (err error) {
+func UpdateProductDB(p ProductDatabaseStruct) (err error) {
 	_, err = db.DB.Exec("UPDATE product SET name=$1, price=$2, in_stock=$3 WHERE product_id=$4", p.Name, p.Price, p.In_stock, p.Product_id)
 	return
 }
 
 // Удаление продукта из Базы Данных
-func DeleteProductDB(p DeleteProductStruct) (err error) {
+func DeleteProductDB(p ProductDatabaseStruct) (err error) {
 	_, err = db.DB.Exec("DELETE FROM product WHERE product_id=$1", p.Product_id)
 	return
 }

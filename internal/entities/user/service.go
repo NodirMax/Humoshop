@@ -1,14 +1,14 @@
 package user
 
-func GetUserService(login string) (users []UserDatabase, err error) {
-	users, err = GetUserFromDB(login)
+func GetUserService(user UserModel) (users []UserModel, err error) {
+	users, err = GetUserFromDB(user)
 	if err != nil {
 		return
 	}
 	return
 }
 
-func CreateUserService(user CreateUserStruct) (err error) {
+func CreateUserService(user UserModel) (err error) {
 	err = CreateUserDB(user)
 	if err != nil {
 		return
@@ -16,7 +16,7 @@ func CreateUserService(user CreateUserStruct) (err error) {
 	return
 }
 
-func UpdateUserService(user UpdateUserStruct) (err error) {
+func UpdateUserService(user UserModel) (err error) {
 	err = UpdateUserDB(user)
 	if err != nil {
 		return
@@ -24,7 +24,7 @@ func UpdateUserService(user UpdateUserStruct) (err error) {
 	return
 }
 
-func DeleteUserService(user DeleteUserStruct) (err error) {
+func DeleteUserService(user UserModel) (err error) {
 	err = DeleteUserDB(user)
 	if err != nil {
 		return

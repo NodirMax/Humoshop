@@ -8,9 +8,7 @@ import (
 
 // Получение данных о продукте
 func ProductGET(w http.ResponseWriter, r *http.Request) {
-	var GetProduct struct {
-		Id int64 `json:"id"`
-	}
+	var GetProduct product.ProductDatabaseStruct
 
 	err := json.NewDecoder(r.Body).Decode(&GetProduct)
 	if err != nil {
@@ -33,12 +31,7 @@ func ProductGET(w http.ResponseWriter, r *http.Request) {
 
 // Добавление продукта
 func ProductCreate(w http.ResponseWriter, r *http.Request) {
-	var CreateProduct struct {
-		Name     string  `json:"name"`
-		Price    float64 `json:"price"`
-		In_stock bool    `json:"in_stock"`
-	}
-
+	var CreateProduct product.ProductDatabaseStruct
 	err := json.NewDecoder(r.Body).Decode(&CreateProduct)
 	if err != nil {
 		w.WriteHeader(401)
@@ -60,12 +53,7 @@ func ProductCreate(w http.ResponseWriter, r *http.Request) {
 
 // Обновление данных продукта
 func ProductUpdate(w http.ResponseWriter, r *http.Request) {
-	var Product struct {
-		Product_id int64   `json:"product_id"`
-		Name       string  `json:"name"`
-		Price      float64 `json:"price"`
-		In_stock   bool    `json:"in_stock"`
-	}
+	var Product product.ProductDatabaseStruct
 
 	err := json.NewDecoder(r.Body).Decode(&Product)
 	if err != nil {
@@ -88,10 +76,7 @@ func ProductUpdate(w http.ResponseWriter, r *http.Request) {
 
 // Удаление данных о продукте
 func ProductDelete(w http.ResponseWriter, r *http.Request) {
-	var DeleteUser struct {
-		Product_id int64 `json:"product_id"`
-	}
-
+	var DeleteUser product.ProductDatabaseStruct
 	err := json.NewDecoder(r.Body).Decode(&DeleteUser)
 	if err != nil {
 		w.WriteHeader(401)
