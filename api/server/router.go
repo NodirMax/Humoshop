@@ -27,6 +27,9 @@ func StartRouter() {
 
 	//роуты которые относятся к category
 	router.HandleFunc("/category", handlers.CategoryGET).Methods("GET")
+	router.HandleFunc("/category", handlers.CategoryCreate).Methods("POST")
+	router.HandleFunc("/category", handlers.CategoryUpdate).Methods("PUT")
+	router.HandleFunc("/category", handlers.CategoryDelete).Methods("DELETE")
 
 	// main rout
 	router.HandleFunc("/", handlers.HomeHandler)

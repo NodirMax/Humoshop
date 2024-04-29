@@ -15,7 +15,7 @@ func GetProductDB(product_id ProductDatabaseStruct) (product []ProductDatabaseSt
 
 	var p ProductDatabaseStruct
 	for rows.Next() {
-		err := rows.Scan(&p.Product_id, &p.Name, &p.Price, &p.In_stock)
+		err := rows.Scan(&p.Product_id, &p.Name, &p.Price, &p.In_stock, &p.Category_id)
 		if err != nil {
 			log.Println("Ошибка row")
 			continue
@@ -26,15 +26,15 @@ func GetProductDB(product_id ProductDatabaseStruct) (product []ProductDatabaseSt
 }
 
 // Добавление нового продукта В базу данных
-func CreateProductDB(user ProductDatabaseStruct) (err error) {
-	_, err = db.DB.Exec("INSERT INTO product(name, price, in_stock) VALUES ($1, $2, $3)", user.Name, user.Price, user.In_stock)
+func CreateProductDB(p ProductDatabaseStruct) (err error) {
+	_, err = db.DB.Exec("INSERT INTO product(name, price, in_stock) VALUES ($1, $2, $3)", p.Name, p.Price, p.In_stock, p.Category_id)
 	return
 }
 
 // Обновление информации о продукте
 func UpdateProductDB(p ProductDatabaseStruct) (err error) {
-	_, err = db.DB.Exec("UPDATE product SET name=$1, price=$2, in_stock=$3 WHERE product_id=$4", p.Name, p.Price, p.In_stock, p.Product_id)
-	return
+	_, err = db.DB.Exec("UPDATE product SET name=$1, price=$2, in_stock=$3 WHERE product_id=$4", p.Name, p.Price, p.In_stock, p.Product_id, p.Category_id)
+	return	
 }
 
 // Удаление продукта из Базы Данных
