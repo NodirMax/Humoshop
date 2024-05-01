@@ -6,22 +6,13 @@ import (
 )
 
 // Запрос к базе данных о пользователье
-func GetUserFromDB(user UserModel) (users []UserModel, err error) {
-	rows, err := db.DB.Query("SELECT * FROM users WHERE login=$1", user.Login)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
+func GetUserFromDB(user UserModel) (u UserModel, err error) {
+	row := db.DB.QueryRow("SELECT * FROM users WHERE id=$1", user.Id)
 
-	var u UserModel
-	for rows.Next() {
-		err := rows.Scan(&u.Id, &u.Name, &u.Surname, &u.Phone, &u.Login, &u.Password, &u.DataTIME)
-		if err != nil {
-			log.Println("Ошибка row")
-			continue
-		}
+	err = row.Scan(&u.Id, &u.Name, &u.Surname, &u.Phone, &u.Login, &u.Password, &u.DataTIME)
+	if err != nil {
+		log.Println("Ошибка row")
 	}
-	users = append(users, u)
 	return
 }
 

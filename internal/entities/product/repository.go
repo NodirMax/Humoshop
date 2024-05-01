@@ -6,22 +6,13 @@ import (
 )
 
 // Запрос к базе данных о продукте
-func GetProductDB(product_id ProductDatabaseStruct) (product []ProductDatabaseStruct, err error) {
-	rows, err := db.DB.Query("SELECT * FROM product WHERE product_id=$1", product_id.Product_id)
-	if err != nil {
-		return
-	}
-	defer rows.Close()
+func GetProductDB(product_id ProductDatabaseStruct) (p ProductDatabaseStruct, err error) {
+	row := db.DB.QueryRow("SELECT * FROM product WHERE product_id=$1", product_id.Product_id)
 
-	var p ProductDatabaseStruct
-	for rows.Next() {
-		err := rows.Scan(&p.Product_id, &p.Name, &p.Price, &p.In_stock, &p.Category_id)
-		if err != nil {
-			log.Println("Ошибка row")
-			continue
-		}
+	err = row.Scan(&p.Product_id, &p.Name, &p.Price, &p.In_stock, &p.Category_id)
+	if err != nil {
+		log.Println("Ошибка row")
 	}
-	product = append(product, p)
 	return
 }
 

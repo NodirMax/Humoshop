@@ -1,7 +1,7 @@
 package user
 
-func GetUserService(user UserModel) (users []UserModel, err error) {
-	users, err = GetUserFromDB(user)
+func GetUserService(u UserModel) (user UserModel, err error) {
+	user, err = GetUserFromDB(u)
 	if err != nil {
 		return
 	}
