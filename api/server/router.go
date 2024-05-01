@@ -12,24 +12,27 @@ func StartRouter() {
 	router := mux.NewRouter()
 	//router.HandleFunc("/product/{product_name}", handlers.ProductHandler)
 	//router.HandleFunc("/category/{category_name}", handlers.CategoryHandler)
-
+	
 	//роуты которые относятся к user-y
-	router.HandleFunc("/user", handlers.GetUser).Methods("GET")
-	router.HandleFunc("/user", handlers.CreateUser).Methods("POST")
-	router.HandleFunc("/user", handlers.UpdateUser).Methods("PUT")
-	router.HandleFunc("/user", handlers.DeleteUser).Methods("DELETE")
+	routerUser := router.PathPrefix("/user").Subrouter()
+	routerUser.HandleFunc("/", handlers.GetUser).Methods("GET")
+	routerUser.HandleFunc("/", handlers.CreateUser).Methods("POST")
+	routerUser.HandleFunc("/", handlers.UpdateUser).Methods("PUT")
+	routerUser.HandleFunc("/", handlers.DeleteUser).Methods("DELETE")
 
 	//роуты которые относятся к product
-	router.HandleFunc("/product", handlers.ProductGET).Methods("GET")
-	router.HandleFunc("/product", handlers.ProductCreate).Methods("POST")
-	router.HandleFunc("/product", handlers.ProductUpdate).Methods("PUT")
-	router.HandleFunc("/product", handlers.ProductDelete).Methods("DELETE")
+	routerProduct := router.PathPrefix("/product").Subrouter()
+	routerProduct.HandleFunc("/", handlers.ProductGET).Methods("GET")
+	routerProduct.HandleFunc("/", handlers.ProductCreate).Methods("POST")
+	routerProduct.HandleFunc("/", handlers.ProductUpdate).Methods("PUT")
+	routerProduct.HandleFunc("/", handlers.ProductDelete).Methods("DELETE")
 
 	//роуты которые относятся к category
-	router.HandleFunc("/category", handlers.CategoryGET).Methods("GET")
-	router.HandleFunc("/category", handlers.CategoryCreate).Methods("POST")
-	router.HandleFunc("/category", handlers.CategoryUpdate).Methods("PUT")
-	router.HandleFunc("/category", handlers.CategoryDelete).Methods("DELETE")
+	routerCategory := router.PathPrefix("/category").Subrouter()
+	routerCategory.HandleFunc("/", handlers.CategoryGET).Methods("GET")
+	routerCategory.HandleFunc("/", handlers.CategoryCreate).Methods("POST")
+	routerCategory.HandleFunc("/", handlers.CategoryUpdate).Methods("PUT")
+	routerCategory.HandleFunc("/", handlers.CategoryDelete).Methods("DELETE")
 
 	// main rout
 	router.HandleFunc("/", handlers.HomeHandler)
